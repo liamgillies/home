@@ -3,34 +3,15 @@ description: Open-Source Web Developer and 3D Graphics Artist.
 baseurl: ""
 url: https://farazshaikh.com
 livereload: true
-collections:
-  experiments:
-    output: true
-    order:
-      - Sea Breeze/index.html
-      - Planet Generator/index.html
-  libraries:
-    output: true
-    order:
-      - gl-Noise.md
-      - CSM.md
-      - three-noise.md
-  apps:
-    output: true
-    order:
-      - This Site.md
-      - Terrain Builder.md
+includes_dir: "_components"
+include:
+  - _pages
 exclude:
   - "tmp/**/*"
   - .gitignore
   - Gemfile
   - Gemfile.lock
 host: 0.0.0.0
-google_analytics: G-5C1GFMMHFF
-plugins:
-  - jekyll-image-optim
-  - jekyll-sitemap
-image_optim:
-  cache_file: "_image_optim_cache.yml"
-  image_glob: "_*/**/*.{gif,png,jpg,jpeg}"
-  archive_dir: "tmp/_image_optim_archive"
+sass:
+  sass_dir: _sass
+  style: compressed

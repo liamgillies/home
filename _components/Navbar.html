@@ -1,0 +1,29 @@
+<div class="container" style="position: relative">
+  <nav class="navbar has-shadow" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      {% if page.url == '/' %}
+      <a id="unicorn-btn" class="navbar-item no-dark-mode" href="https://farazshaikh.com" title="Click me!">👻</a>
+      {% else %}
+      <a href="{% link index.html %}" class="navbar-item">Faraz Shaikh</a>
+      {% endif %}
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu is-fixed-top">
+      <div class="navbar-end">
+        {% if page.url != '/' %}
+        <a class="navbar-item is-tab" href="{% link index.html %}">Home</a>
+        {% endif %}
+        <a class="navbar-item is-tab">Libraries</a>
+        <a class="navbar-item is-tab">Apps</a>
+        <a class="navbar-item is-tab">Experiments</a>
+        <a class="navbar-item is-tab">Contributions</a>
+        <a class="navbar-item is-tab">Resume</a>
+        <a class="navbar-item is-tab">Blog</a>
+      </div>
+    </div>
+  </nav>
+</div>

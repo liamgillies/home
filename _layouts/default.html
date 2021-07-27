@@ -3,29 +3,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#3273DC" />
     <meta name="author" content="Faraz Shaikh" />
     {% capture description %}{% if page.description %}{{ page.description | strip_html }}{% else %}{{ site.description }}{% endif %}{% endcapture %}
-    <meta name="description" content="{{ description }}" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}" />
-    <meta property="og:url" content="{{ page.url | absolute_url }}" />
-    <meta property="og:description" content="{{ description }}" />
-    {% if page.collection == 'apps' %} {% for file in site.static_files %} {% assign path = '/assets/' | append: page.slug | append: '/icon' %} {% if file.path contains path %}
-    <meta property="og:image" content="{{ file.path | absolute_url }}" />
-    {% endif %} {% endfor %} {% else %}
-    <meta property="og:image" content="https://farazshaikh.com/Assets/profile.jpg" />
-    {% endif %}
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@CantBeFaraz" />
-    <meta name="twitter:creator" content="@CantBeFaraz" />
-    <meta name="x-build-time" content="{{ site.time | date_to_rfc822 }}" />
     <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
-    <link rel="alternate" type="application/rss+xml" title="Faraz Shaikh's blog" href="https://farazzshaikh.medium.com/" />
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>" />
+    <link rel="stylesheet" href="{{ '/main.css' | relative_url }}" />
 
-    <link id="bulma" rel="stylesheet" href="/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css" integrity="sha512-jQqzj2vHVxA/yCojT8pVZjKGOe9UmoYvnOuM/2sQ110vxiajBU+4WkyRs1ODMmd4AfntwUEV4J+VfM6DkfjLRg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css" integrity="sha512-OdEXQYCOldjqUEsuMKsZRj93Ht23QRlhIb8E/X0sbwZhme8eUw6g8q7AdxGJKakcBbv7+/PX0Gc2btf7Ru8cZA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/brands.min.css" integrity="sha512-apX8rFN/KxJW8rniQbkvzrshQ3KvyEH+4szT3Sno5svdr6E/CP0QE862yEeLBMUnCqLko8QaugGkzvWS7uNfFQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style type="text/css" media="print">
       .no-print {
@@ -38,9 +25,24 @@
       }
     </style>
 
-    <script type="module" src="{{ '/main.js' | relative_url }}"></script>
     <script>
-      console.log(`
+      window.onload = () => {
+        // Helper
+        const dom = {
+          select: document.querySelector.bind(document),
+          slectAll: document.querySelectorAll.bind(document),
+        };
+
+        // Burger menu toggle
+        const burger = dom.select(".navbar-burger");
+        const menu = dom.select(".navbar-menu");
+        console.log(burger);
+        burger.addEventListener("click", () => {
+          burger.classList.toggle("is-active");
+          menu.classList.toggle("is-active");
+        });
+
+        console.log(`
     .__________________________.
     | .___________________. |==|
     | | Hello,            | |  |
@@ -60,44 +62,12 @@
  \\ ------------------------------ /
   \\______________________________/
         `);
+      };
     </script>
-    {% if site.google_analytics and jekyll.environment == 'production' %} {% include analytics.html %} {% endif %}
   </head>
   <body>
-    <div class="hero-head no-print" style="position: sticky; position: -webkit-sticky; top: 0; z-index: 1000">
-      <div class="container" style="position: relative">
-        <nav class="navbar has-shadow" role="navigation" aria-label="main navigation">
-          <div class="navbar-brand">
-            {% if page.url == '/' %}
-            <a id="unicorn-btn" class="navbar-item no-dark-mode" href="https://farazshaikh.com" title="Click me!">👻</a>
-            {% else %}
-            <a href="{% link index.html %}" class="navbar-item">Faraz Shaikh</a>
-            {% endif %}
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-            </a>
-          </div>
-          <div class="navbar-menu is-fixed-top">
-            <div class="navbar-end">
-              {% if page.url != '/' %}
-              <a class="navbar-item is-tab" href="{% link index.html %}">Home</a>
-              {% endif %}
-              <a class="navbar-item is-tab" href="{% link pages/apps.html %}">Apps</a>
-              <a class="navbar-item is-tab" href="{% link pages/libraries.html %}">Libraries</a>
-              <a class="navbar-item is-tab" href="{% link pages/experiments.html %}">Experiments</a>
-              <a class="navbar-item is-tab" href="{% link pages/contributions.html %}">Contributions</a>
-              <a class="navbar-item is-tab" href="{% link pages/resume.html %}">Resume</a>
-            </div>
-          </div>
-        </nav>
-      </div>
-      {% if page.url == '/' %}
-      <section class="warning-container">Having trouble running this page? <a href="{% link pages/reader.md %}">Switch to reader view.</a></section>
-      {% endif %}
-    </div>
+    <div class="hero-head no-print">{% include Navbar.html %}</div>
 
-    {{ content }}
+    {{ content }} {% include Footer.html %}
   </body>
 </html>
