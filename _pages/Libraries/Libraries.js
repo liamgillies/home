@@ -4,14 +4,14 @@ import { createLangTags, getLastUpdate, getStars, isDebug } from "../utils.js";
   let url;
 
   if (isDebug()) {
-    url = "/tmp/apps.json";
+    url = "/tmp/libraries.json";
   } else {
-    url = "http://api.farazshaikh.com/apps";
+    url = "http://api.farazshaikh.com/libraries";
   }
 
   const colors = await (await fetch("/data/colors.json")).json();
 
-  const container = document.querySelector("#apps .columns");
+  const container = document.querySelector("#libraires .columns");
   const template = document.querySelector("template#Card");
 
   try {
@@ -39,10 +39,11 @@ import { createLangTags, getLastUpdate, getStars, isDebug } from "../utils.js";
 
       title.textContent = app.name;
       disc.textContent = app.disc;
-      type.textContent = app.type;
+      if (app.type) type.textContent = app.type;
+      else type.style.display = "none";
 
       const { repo } = app;
-      const imgsrc = repo + "/raw/master/Assets/banner.png";
+      const imgsrc = repo + "/raw/master/Assets/logo.png";
 
       const lang_tags = createLangTags(colors, app.lang, false);
       const tech_tags = createLangTags(colors, app.tech, false);
@@ -61,8 +62,11 @@ import { createLangTags, getLastUpdate, getStars, isDebug } from "../utils.js";
       else a_launch.style.display = "none";
       a_blog.style.display = "none";
 
+      img.onerror = function () {
+        img_fallback.setAttribute("src", `/assets/Libraries/default.png`);
+        this.style.display = "none";
+      };
       img.onload = img.setAttribute("src", imgsrc);
-      img_fallback.setAttribute("src", `/assets/Apps/${app.name}.jpg`);
 
       box.style.opacity = 1;
     });

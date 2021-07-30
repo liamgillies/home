@@ -24,15 +24,13 @@ export function brightnessByColor(color) {
   if (typeof r != "undefined") return (r * 299 + g * 587 + b * 114) / 1000;
 }
 
-export function createLangTags(colors, langs, large, rand) {
+export function createLangTags(colors, langs, large) {
   return langs
     .map((l, i) => {
       let _l = l;
-      if (rand) {
+
+      while (!colors[l] || colors[l].color === null) {
         l = Object.keys(colors)[Math.floor(Math.random() * 100) % Object.keys(colors).length];
-        while (colors[l].color === null) {
-          l = Object.keys(colors)[Math.floor(Math.random() * 100) % Object.keys(colors).length];
-        }
       }
 
       const color = colors[l] ? colors[l].color : null;
@@ -47,7 +45,7 @@ export function createLangTags(colors, langs, large, rand) {
             href=${`http://www.google.com/search?q=${_l}+programming`}
             target="_blank"
             title="Look up '${_l}'"
-        >${rand ? langs[i] : l}</a>
+        >${_l}</a>
         `;
     })
     .join("\n");

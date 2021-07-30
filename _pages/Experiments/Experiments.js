@@ -4,20 +4,20 @@ import { createLangTags, getLastUpdate, getStars, isDebug } from "../utils.js";
   let url;
 
   if (isDebug()) {
-    url = "/tmp/apps.json";
+    url = "/tmp/experiments.json";
   } else {
-    url = "http://api.farazshaikh.com/apps";
+    url = "http://api.farazshaikh.com/experiments";
   }
 
   const colors = await (await fetch("/data/colors.json")).json();
 
-  const container = document.querySelector("#apps .columns");
+  const container = document.querySelector("#experiments .columns");
   const template = document.querySelector("template#Card");
 
   try {
     const { data: apps } = JSON.parse(await (await fetch(url)).text());
 
-    apps.forEach(async (app) => {
+    apps.forEach((app) => {
       const card = template.content.cloneNode(true);
 
       const a_repo = card.querySelector("a.repo");
@@ -39,10 +39,14 @@ import { createLangTags, getLastUpdate, getStars, isDebug } from "../utils.js";
 
       title.textContent = app.name;
       disc.textContent = app.disc;
-      type.textContent = app.type;
+      if (app.type) type.textContent = app.type;
+      else type.style.display = "none";
+
+      time.style.display = "none";
+      stars.style.display = "none";
 
       const { repo } = app;
-      const imgsrc = repo + "/raw/master/Assets/banner.png";
+      const imgsrc = repo.replace("tree", "raw") + "/Assets/banner.jpg";
 
       const lang_tags = createLangTags(colors, app.lang, false);
       const tech_tags = createLangTags(colors, app.tech, false);
@@ -53,16 +57,14 @@ import { createLangTags, getLastUpdate, getStars, isDebug } from "../utils.js";
       if (app.archived) archived.textContent = "Archived";
       else archived.style.display = "none";
 
-      time.textContent = await getLastUpdate(repo);
-      stars.textContent = await getStars(repo);
-
       a_repo.setAttribute("href", repo);
       if (app.link) a_launch.setAttribute("href", app.link);
       else a_launch.style.display = "none";
-      a_blog.style.display = "none";
+      if (app.blog) a_blog.setAttribute("href", app.blog);
+      else a_blog.style.display = "none";
 
       img.onload = img.setAttribute("src", imgsrc);
-      img_fallback.setAttribute("src", `/assets/Apps/${app.name}.jpg`);
+      img_fallback.setAttribute("src", `/assets/Experiments/${app.name}.jpg`);
 
       box.style.opacity = 1;
     });

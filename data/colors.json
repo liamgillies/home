@@ -1830,5 +1830,17 @@
     "Zimpl": {
         "color": null,
         "url": "https://github.com/trending?l=Zimpl"
+    },
+    "ThreeJS": {
+        "color": "#F6AE99"
+    },
+    "React": {
+        "color": "#B5EAEA"
+    },
+    "WebGL": {
+        "color": "#F6C6EA"
+    },
+    "Shaders": {
+        "color": "#CEE5D0"
     }
 }

@@ -74,29 +74,6 @@ h2 {
 
 
 
-html {
-    scroll-behavior: smooth;
-    // hyphens: auto;
-
-    font-size: 16px;
-
-    nav {
-        font-size: 12px;
-    }
-
-    @include tablet {
-        font-size: 16px;
-    }
-
-    @include desktop {
-        font-size: 16px;
-
-        nav {
-            font-size: 16px;
-        }
-    }
-
-}
 
 body {
     font-family:
@@ -370,6 +347,7 @@ code.highlighter-rouge {
     overflow: hidden;
 }
 
+
 .box {
     flex: 1 1 auto;
     background-color: $bg-light-transparent;
@@ -383,6 +361,7 @@ code.highlighter-rouge {
     transition: all 200ms ease-in-out;
     // box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.2);
     // box-shadow: none
+    position: relative;
 }
 
 
@@ -391,12 +370,29 @@ code.highlighter-rouge {
     object-fit: contain;
     overflow: hidden;
     aspect-ratio: 5 / 3;
-    background-color: $bg-dark;
+    background-color: transparent;
     border-radius: 5px;
     box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.2);
     
 }
 
+#libraires .box figure {
+    transform: translate(0%, -50%);
+    position: absolute;
+    top: 0;
+    left:0%;
+    width: 160px;
+    aspect-ratio: unset;
+    box-shadow: none
+}
+
+#libraires .box {
+    padding-top: 80px;
+}
+
+#libraires .column {
+    padding-top: 80px;
+}
 
 
 .image {
@@ -467,7 +463,7 @@ footer {
 }
 
 .main-container {
-    margin: 0% 20%;
+    margin: 0% 5%;
 }
 
 
@@ -498,10 +494,10 @@ footer {
         }
     }
 
-
     .main-container {
-        margin: 0% 10%;
+        margin: 0% 5%;
     }
+    
 
     #stories.columns {
         flex-direction: column;
