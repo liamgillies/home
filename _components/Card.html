@@ -1,0 +1,50 @@
+<template id="Card">
+  <div class="column is-mobile is-half-tablet is-one-third-desktop">
+    <div style="display: flex; height: 100%">
+      <div class="box" style="opacity: 0">
+        <div>
+          <figure class="image">
+            <img class="main" onerror="this.style.display = 'none'" />
+            <img class="fallback" onerror="this.style.display = 'none'" />
+          </figure>
+
+          <div>
+            <div style="display: flex">
+              <h1 class="title is-5 mt-3">Title</h1>
+              <span class="tag type mt-1" style="margin: 0px 5px"></span>
+            </div>
+
+            <div style="display: flex; align-items: center">
+              <a class="repo" target="_black" title="Source Code">
+                <i class="icon fab fa-github" style="margin: 8px; margin-left: 0px"></i>
+              </a>
+              <a class="launch" target="_black" title="Launch">
+                <i class="icon fas fa-rocket"></i>
+              </a>
+            </div>
+
+            <h4 class="subtitle is-6 mt-0 mb-0">Disc</h4>
+          </div>
+        </div>
+
+        <br />
+
+        <div>
+          <div class="foot">
+            <div>
+              <span class="tech"></span>
+              |
+              <span class="langs"></span>
+            </div>
+
+            <br />
+
+            <span class="tag time">Updated just now</span>
+            <span class="tag stars"></span>
+            <span class="tag archived"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

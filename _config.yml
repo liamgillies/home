@@ -6,6 +6,8 @@ livereload: true
 includes_dir: "_components"
 include:
   - _pages
+  - tmp
+  - data
 exclude:
   - "tmp/**/*"
   - .gitignore

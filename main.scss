@@ -43,7 +43,7 @@ h3,
 span,
 p,
 li {
-    color: black;
+    color: black !important;
 }
 
 h4,
@@ -51,6 +51,7 @@ h5,
 h6,
 p,
 div,
+.tag,
 span:not(code span) {
     font-family:
         "Roboto",
@@ -333,13 +334,11 @@ code.highlighter-rouge {
     // 	filter: invert(100%) hue-rotate(-180deg) brightness(105%) contrast(95%) !important;
     // }
 
-    .main-container {
+    .container {
         filter: invert(100%) hue-rotate(-180deg) brightness(105%) contrast(95%) !important;
     }
 
-    .hero-head {
-        filter: invert(100%) hue-rotate(-180deg) brightness(105%) contrast(95%) !important;
-    }
+
 
     footer {
         filter: invert(100%) hue-rotate(-180deg) brightness(105%) contrast(95%) !important;
@@ -372,24 +371,33 @@ code.highlighter-rouge {
 }
 
 .box {
-    cursor: pointer;
-    box-shadow: none;
-    transition: 200ms box-shadow ease-in-out;
-    flex-grow: 1;
+    flex: 1 1 auto;
     background-color: $bg-light-transparent;
+    
     border-radius: 10px;
-    transition: 200ms background-color ease-in-out;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
+    transition: all 200ms ease-in-out;
+    // box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.2);
+    // box-shadow: none
 }
-
 
 
 .box figure {
     overflow: hidden;
-    object-fit: cover;
+    object-fit: contain;
     overflow: hidden;
-
+    aspect-ratio: 5 / 3;
+    background-color: $bg-dark;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.2);
+    
 }
+
+
 
 .image {
     margin-bottom: 0.5em;
@@ -399,17 +407,6 @@ figure .gatsby-image-wrapper,
 figure img {
     transition: 200ms transform ease-in-out;
 }
-
-.box:hover {
-    background-color: $bg-light;
-}
-
-a.box:hover,
-a.box:focus {
-    box-shadow: 0 0.5em 1em -0.125em rgb(10, 10, 10 / 10%), 0 0 0 1px black;
-
-}
-
 
 footer {
     background-color: transparent;
@@ -456,7 +453,9 @@ footer {
         width: 24px !important;
         height: 24px !important;
         font-size: 24px !important;
+        
     }
+
 
 
 
@@ -554,4 +553,25 @@ footer {
     font-weight: bold;
     display: none;
     z-index: 1 !important;
+}
+
+.tag.archived {
+    background-color: rgba(255, 182, 182, 0.5) !important;
+    font-weight: bold !important;
+}
+
+.tag.type {
+    background-color: rgba(255, 236, 182, 0.5) !important;
+    font-style: italic;
+}
+
+.tag:not(body) {
+    background-color: #d3dff0 ;
+}
+
+.divider {
+    width: 100%;
+    height: 1px;
+    background-color: black;
+    margin: 16px 0px;
 }
