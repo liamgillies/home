@@ -1,0 +1,47 @@
+
+body,
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    height: 100%;
+    overscroll-behavior-y: contain;
+}
+
+body {
+    font-family: sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    background: url(./background_stars.png);
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    margin-top: -8px;
+    margin-left: -8px;
+}
+
+.blur {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    cursor: pointer;
+}
+
+.blur h3 {
+    width: 80%;
+    text-align: center;
+}
+
+.blur svg {
+    width: 80%;
+    max-width: 128px;
+    transition: transform 300ms ease-in-out;
+}
+
+.blur:hover > svg {
+    transform: scale(1.3);
+}
