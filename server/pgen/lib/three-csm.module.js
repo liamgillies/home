@@ -1,4 +1,4 @@
-import * as THREE from "https://cdn.skypack.dev/three";
+import * as THREE from "../lib/glNoise/node_modules/three/build/three.module.js";
 
 const TYPES$1 = {
   NORMAL: "MeshNormalMaterial",

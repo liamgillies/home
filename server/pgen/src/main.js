@@ -1,10 +1,9 @@
-import * as THREE from "https://cdn.skypack.dev/three";
+import * as THREE from '../lib/glNoise/node_modules/three/build/three.module.js';
 import { OrbitControls } from "https://cdn.skypack.dev/three/examples/jsm/controls/OrbitControls.js";
 import { loadShaders } from "../lib/glNoise/build/glNoise.m.js";
 
 import * as dat from "../lib/dat.gui.module.js";
 import Stats from "../lib/stats.js";
-// import { worldOpts } from "../../controllers/planetController.js";
 
 const paths = ["./shaders/fragment.glsl", "./shaders/vertex.glsl"];
 
@@ -27,19 +26,20 @@ class GUIOpts {
   }
 }
 
+
 const worldOpts = {
-  height: new GUIOpts(0, 0.01, 10, 0.01, "World Height"),
-  seaLevel: new GUIOpts(0.22, -2, 2, 0.01, "Sea Level"),
-  simplexOpacity: new GUIOpts(0.2, 0, 1, 0.01, "World Detail"),
+  height: new GUIOpts(10, 0.01, 10, 0.01, "World Height"),
+  seaLevel: new GUIOpts(0.5, -2, 2, 0.01, "Sea Level"),
+  simplexOpacity: new GUIOpts(1, 0, 1, 0.01, "World Detail"),
 };
 
 const ridgeOpts = {
   seed: new GUIOpts(Math.random() * 1000, null, null, null, "Seed"),
-  persistance: new GUIOpts(0.5, 0.01, 2, 0.01, "Smoothness"),
+  persistance: new GUIOpts(0.8, 0.01, 2, 0.01, "Smoothness"),
   lacunarity: new GUIOpts(2, 0.1, 4, 0.01, "Detail"),
-  scale: new GUIOpts(1, 0.01, 5, 0.01, "Scale"),
+  scale: new GUIOpts(2.5, 0.01, 5, 0.01, "Scale"),
   redistribution: new GUIOpts(1, 0.1, 5, 0.01, "Flatness"),
-  octaves: new GUIOpts(7, 1, 10, 1, "Number of Layers"),
+  octaves: new GUIOpts(10, 1, 10, 1, "Number of Layers"),
   terbulance: new GUIOpts(true, null, null, null, "Terbulance"),
   ridge: new GUIOpts(true, null, null, null, "Ridges"),
 };
@@ -55,9 +55,8 @@ const SimplexOpts = {
   ridge: new GUIOpts(false, null, null, null, "Ridges"),
 };
 
-// higher for more islands with sharp peaks
 const maskOpts = {
-  scale: new GUIOpts(0.5, 0.01, 5, 0.01, "Scale"),
+  scale: new GUIOpts(0.55, 0.01, 5, 0.01, "Scale"),
 };
 
 function GUI2Uniform(obj) {
@@ -83,7 +82,7 @@ loadShaders(paths).then(([fragment, vertex]) => {
     value: {
       falloff: 0.15,
       radius: 20,
-      position: new THREE.Vector3(5, 5, 5),
+      position: new THREE.Vector3(5, 5, 10),
       color: hex2rgb("#ffc868"),
       ambient: hex2rgb("#0a040b"),
     },
@@ -108,11 +107,30 @@ loadShaders(paths).then(([fragment, vertex]) => {
     },
   });
 
+  
   const geometry = new THREE.IcosahedronGeometry(3, 80);
   const sphere = new THREE.Mesh(geometry, material);
   scene.add(sphere);
 
-  camera.position.set(4, 4, 4);
+  const moonGeometry = new THREE.IcosahedronGeometry(0.5, 10);
+  const moonTexture = new THREE.TextureLoader().load( '../ice_texture.jpg' );
+  const moonMaterial = new THREE.MeshBasicMaterial( { map: moonTexture, side: THREE.DoubleSide } );
+  const moon = new THREE.Mesh(moonGeometry, moonMaterial);
+  moon.position.set(3, 3, 0);
+  scene.add(moon);
+
+  // const ringGeometry = new THREE.RingGeometry(13, 17, 80);
+  // const texture = new THREE.TextureLoader().load( '../ice_texture.jpg' );
+  // const ringMaterial = new THREE.MeshBasicMaterial( { map: texture, side: THREE.DoubleSide } );
+  // const ring = new THREE.Mesh( ringGeometry, ringMaterial );
+  // ring.position.set(0,0,0);
+  // scene.add( ring );
+
+  const pivotPoint = new THREE.Object3D();
+  sphere.add(pivotPoint);
+  pivotPoint.add(moon);
+
+  camera.position.set(5, 5, 10);
 
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enablePan = false;
@@ -177,6 +195,13 @@ loadShaders(paths).then(([fragment, vertex]) => {
     if (doesAnimate.value) {
       sphere.rotation.y += 0.0004;
       sphere.rotation.x -= 0.0004;
+    }
+
+    if (doesAnimate.value) {
+      pivotPoint.rotation.x += 0.0004;
+      pivotPoint.rotation.z += 0.0004;
+      // moon.rotation.y += 0.0004;
+      // moon.rotation.x -= 0.0004;
     }
 
     stats.end();
