@@ -6,13 +6,19 @@ module.exports = {
   
   const borealColor = `
   if (vHeight == uWorldOpts.seaLevel) 
-    diffuseColor = vec3(0.161, 0.443, 0.902);
-  
-  else if (vHeight <= uWorldOpts.seaLevel + 0.18)
-    diffuseColor = vec3(0.188,0.518,0.153);
-  
-  else
-    diffuseColor = vec3(0.62,0.902,0.298);`
+  diffuseColor = vec3(0.161, 0.443, 0.902);
+
+else if (vHeight <= uWorldOpts.seaLevel + 0.03)
+  diffuseColor = vec3(0.329, 0.369, 0.325);
+
+else if (vHeight <= uWorldOpts.seaLevel + 0.12)
+  diffuseColor = vec3(0.686,0.686,0.686);
+
+else if (vHeight <= uWorldOpts.seaLevel + 0.28)
+  diffuseColor = vec3(0.9,0.9,0.9);
+
+else
+  diffuseColor = vec3(0.62,0.902,0.298);`
   
   const borealLight = `
   if(vHeight > uWorldOpts.seaLevel + 0.28) {
