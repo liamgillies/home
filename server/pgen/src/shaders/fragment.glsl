@@ -70,19 +70,19 @@ vec3 calcColor() {
 
   vec3 diffuseColor;
 
-  if (vHeight == uWorldOpts.seaLevel) 
+if (vHeight <= uWorldOpts.seaLevel + 0.0001) 
     diffuseColor = vec3(0.161, 0.443, 0.902);
-  
-  else if (vHeight <= uWorldOpts.seaLevel + 0.03)
+
+else if (vHeight <= uWorldOpts.seaLevel + 0.02)
+    diffuseColor = vec3(0.294, 0.839, 0.804);
+
+else if (vHeight <= uWorldOpts.seaLevel + 0.07)
+    diffuseColor = vec3(0.369,0.769,0.408);
+
+else if (vHeight <= uWorldOpts.seaLevel + 0.22)
     diffuseColor = vec3(0.329, 0.369, 0.325);
 
-  else if (vHeight <= uWorldOpts.seaLevel + 0.12)
-    diffuseColor = vec3(0.686,0.686,0.686);
-
-  else if (vHeight <= uWorldOpts.seaLevel + 0.28)
-    diffuseColor = vec3(0.9,0.9,0.9);
-  
-  else
+else
     diffuseColor = vec3(0.62,0.902,0.298);
   return diffuseColor;
 }
@@ -114,13 +114,10 @@ vec3 calcLight(Light light) {
   specular *= specularScale;
   specular *= falloff;
 
-  if(vHeight > uWorldOpts.seaLevel + 0.28) {
-    return diffuseColor + specularStrength * computeSpecular(L, V, N, 0.9);
-  }
-  if(vHeight <= uWorldOpts.seaLevel + 0.28 && vHeight > uWorldOpts.seaLevel + 0.03) {
-    return diffuseColor + computeSpecular(L, V, N, shininess) * 0.1;
-  }
-  return diffuseColor * (diffuse + light.ambient) + specular;
+if(vHeight > uWorldOpts.seaLevel + 0.22) {
+  return diffuseColor + specularStrength * computeSpecular(L, V, N, 0.9);
+}
+return diffuseColor * (diffuse + light.ambient) + specular;
   }
 
 void main() {

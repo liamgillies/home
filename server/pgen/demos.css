@@ -12,8 +12,7 @@ body {
     font-family: sans-serif;
     font-weight: 700;
     font-size: 14px;
-    background: url(./background_stars.png);
-    background-size: cover;
+    z-index: 1000;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
