@@ -5,6 +5,9 @@ import { loadShaders } from "../lib/glNoise/build/glNoise.m.js";
 import * as dat from "../lib/dat.gui.module.js";
 import Stats from "../lib/stats.js";
 
+import './CCapture.min.js';
+import './webm-writer-0.2.0.js';
+
 /*Copyrights for code authored by Yahoo Inc. is licensed under the following terms:
 MIT License
 Copyright  2017 Yahoo Inc.
@@ -3051,9 +3054,13 @@ loadShaders(paths).then(([fragment, vertex]) => {
 
   let ID;
 
-  var rendering = false;
-
-  var imageArray = [];
+  var capturer = new CCapture( { 
+    format: 'webm',
+    name: 'temporary_webm',
+    framerate: 60,
+    verbose: true,
+    timeLimit: 4
+ });
 
   const animate = function () {
 
@@ -3063,16 +3070,9 @@ loadShaders(paths).then(([fragment, vertex]) => {
       controls.update();
 
       renderer.render(scene, camera);
-          //takeScreenshot();
-      if(imageArray.length < 120) {
-        imageArray.push(renderer.domElement.toDataURL());
-        console.log(imageArray.length);
-      } else {
-        rendering = true;
-      }
 
       if (doesAnimate.value) {
-        sphere.rotation.y += 1 * Math.PI / 180; // n is degrees per rotation
+        sphere.rotation.y += 1.5 * Math.PI / 180; // n is degrees per rotation
         // sphere.rotation.x += 0.05;
       }
 
@@ -3085,38 +3085,12 @@ loadShaders(paths).then(([fragment, vertex]) => {
 
       stats.end();
     }
-    setTimeout( function() {
-
-      ID = requestAnimationFrame(animate);
-
-    }, 1000 / 120 );
+    capturer.capture(renderer.domElement);
+    ID = requestAnimationFrame(animate);
   };
 
+ capturer.start();
 
-  function generateGif() {
-    if(!rendering) {
-      window.setTimeout(generateGif, 1000);
-    } else {
-      console.log("starting render with length of " + imageArray.length);
-      gifshot.createGIF({
-        'images': imageArray,
-        'gifWidth': 200,
-        'gifHeight': 200
-      }, (obj) => {
-        if(!obj.error) {
-          var image = obj.image;
-          console.log(image);
-          var w = window.open('', '');
-          var animatedImage = w.document.createElement('img');
-          animatedImage.src = image;
-          w.document.body.appendChild(animatedImage);
-        } else {
-          console.log(obj.error);
-        }
-      })
-    }
-  }
-  generateGif();
 
   const html = document.querySelector("html");
   let playing = html.getAttribute("playing") || "false";
@@ -3124,6 +3098,7 @@ loadShaders(paths).then(([fragment, vertex]) => {
   if (playing === "false") {
     cancelAnimationFrame(ID);
   } else {
+    capturer.capture(renderer.domElement);
     requestAnimationFrame(animate);
   }
 
@@ -3140,22 +3115,4 @@ loadShaders(paths).then(([fragment, vertex]) => {
   observer.observe(html, {
     attributes: true, //configure it to listen to attribute changes
   });
-
-  function takeScreenshot() {
-    // For screenshots to work with WebGL renderer, preserveDrawingBuffer should be set to true.
-    // open in new window like this
-    // var w = window.open('', '');
-    // w.document.title = "Screenshot";
-    //w.document.body.style.backgroundColor = "red";
-    // var img = new Image();
-    // img.src = renderer.domElement.toDataURL();
-    // console.log(renderer.domElement.toDataURL());
-    // w.document.body.appendChild(img);
-
-    // download file like this.
-    // var a = document.createElement('a');
-    // a.href = renderer.domElement.toDataURL().replace("image/gif", "image/octet-stream");
-    // a.download = 'canvas.gif'
-    // a.click();
-  }
 });

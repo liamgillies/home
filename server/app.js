@@ -9,7 +9,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 // mongodb setup
-const uri = "mongodb+srv://mongouser:planetaria@testing.faevt.mongodb.net/Testing?retryWrites=true&w=majority";
+const uri = "mongodb://mongouser:planetaria@testing-shard-00-00.faevt.mongodb.net:27017,testing-shard-00-01.faevt.mongodb.net:27017,testing-shard-00-02.faevt.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-pmlxft-shard-0&authSource=admin&retryWrites=true&w=majority";
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
